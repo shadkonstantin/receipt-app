@@ -6,6 +6,7 @@
   <meta name="telegram-webapp-theme" content="dark">
   <title>🧾 Дашборд чеков</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>const RECEIPT_DATA = {"total_receipts": 2, "total_spent": 2116.0, "by_store": [["и ИЯ", 1, 1542.0], ["Продуктовый магазин", 1, 574.0]], "top_items": [["Колбаса Докторская Черкашин и", 1, 310.0], ["une грудки цыплёнка-бройлера", 1, 255.0], ["Тоник Биттер Лемон Bitter Rich", 1, 238.0], ["Лапша Ottogi Джин Рамён острый", 1, 169.0], ["Семечки полосатые Or Мартина", 1, 149.0], ["Семечки полосатые От Мартина", 1, 129.0], ["Огурцы короткоплодные", 1, 113.0], ["Яйцо Cl Боровская птицефабрика", 1, 109.0], ["Соус Кавказский Mivimex", 1, 89.0], ["Молоко 3,2% Наша Маша", 1, 80.0]], "recent": [["23.07.2026", "и ИЯ", 1542.0], ["20.07.2026", "Продуктовый магазин", 574.0]]};</script>
   <style>
     :root {
       --bg-primary: #0a1628;
@@ -279,22 +280,6 @@
     }
     .status-dot.online { background: var(--accent-green); }
     .status-dot.offline { background: #e74c3c; }
-
-    /* Telegram theme integration */
-    body.tg-theme-dark { }
-    .tg-btn {
-      background: var(--accent-green);
-      border: none;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-      transition: opacity 0.2s;
-    }
-    .tg-btn:active { opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -366,14 +351,22 @@
   </div>
 
   <script>
-    const API_URL = 'https://d9b45d1f64fe5954-91-108-237-231.serveousercontent.com/api/stats';
+    // Auto-detect API host: use serveo URL if on GitHub Pages, else use relative path
+    const API_HOST = window.API_HOST || (
+      window.location.hostname.includes('serveousercontent.com')
+        ? window.location.origin
+        : window.location.hostname.includes('github.io')
+          ? 'https://d9b45d1f64fe5954-91-108-237-231.serveousercontent.com'
+          : window.location.origin
+    );
+    const API_URL = `${API_HOST}/api/stats`;
 
     // Telegram WebApp init
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
-      // Use Telegram theme colors if available
+      tg.MainButton.setText('🔄 Обновить').show().onClick(() => loadData());
       if (tg.themeParams.bg_color) {
         document.documentElement.style.setProperty('--bg-primary', tg.themeParams.bg_color);
       }
