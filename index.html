@@ -54,6 +54,15 @@
     .cat-total { font-size:14px; font-weight:700; color:var(--green); z-index:1; padding-right:8px; }
     .empty { text-align:center; padding:40px; color:var(--muted); }
     .empty-icon { font-size:40px; margin-bottom:8px; }
+    .trend-row { display:flex; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); gap:8px; }
+    .trend-row:last-child { border:none; }
+    .trend-name { flex:1; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .trend-price { font-size:13px; color:var(--muted); min-width:70px; text-align:right; }
+    .trend-change { font-size:14px; font-weight:700; min-width:80px; text-align:right; }
+    .trend-change.up { color:var(--green); }
+    .trend-change.down { color:#e74c3c; }
+    .trend-change.flat { color:var(--muted); }
+    .trend-count { font-size:10px; color:var(--muted); background:#1a1a3e; padding:2px 6px; border-radius:4px; }
   </style>
 </head>
 <body>
@@ -62,7 +71,7 @@
     <div style="font-size:32px">🧾</div>
     <div><h1>Мои чеки</h1><div class="sub">Дашборд расходов</div></div>
   </div>
-  <div class="updated">Обновлено: 25.07.2026 13:40</div>
+  <div class="updated">Обновлено: 25.07.2026 13:47</div>
 
   <div id="nodata" style="display:none">
     <div class="empty"><div class="empty-icon">📭</div>Пока нет чеков<br><span style="font-size:12px">Отправьте фото чека боту</span></div>
@@ -165,6 +174,11 @@
         <span class="cat-name">снеки</span>
         <span class="cat-total">399 ₽</span>
     </div>
+    </div>
+
+    <div class="section" id="trends" style="display:none">
+      <div class="section-title">📈 Динамика цен</div>
+      
     </div>
 
     <div class="section" id="recent" style="display:block">
